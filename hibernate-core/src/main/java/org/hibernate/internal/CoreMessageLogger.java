@@ -1271,11 +1271,6 @@ public interface CoreMessageLogger extends BasicLogger {
 	@Message(value = "Exception while stopping service", id = 368)
 	void unableToStopHibernateService(@Cause Exception e);
 
-	@LogMessage(level = INFO)
-	@Message(value = "Error stopping service [%s] : %s", id = 369)
-	void unableToStopService(Class class1,
-							 String string);
-
 	@LogMessage(level = WARN)
 	@Message(value = "Exception switching from method: [%s] to a method using the column index. Reverting to using: [%<s]",
 			id = 370)
@@ -1629,13 +1624,6 @@ public interface CoreMessageLogger extends BasicLogger {
 					"using 'key'/'value' as required by spec; attempting to DoTheRightThing"
 	)
 	void nonCompliantMapConversion(String collectionRole);
-
-	@LogMessage(level = WARN)
-	@Message(
-			id = 450,
-			value = "Encountered request for Service by non-primary service role [%s -> %s]; please update usage"
-	)
-	void alternateServiceRole(String requestedRole, String targetRole);
 
 	@LogMessage(level = WARN)
 	@Message(
