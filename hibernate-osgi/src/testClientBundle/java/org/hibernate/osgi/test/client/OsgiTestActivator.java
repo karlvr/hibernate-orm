@@ -29,13 +29,13 @@ import javax.persistence.spi.PersistenceProvider;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.metamodel.spi.TypeContributor;
 import org.hibernate.osgi.test.result.OsgiTestResults;
 import org.hibernate.osgi.test.result.OsgiTestResultsImpl;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

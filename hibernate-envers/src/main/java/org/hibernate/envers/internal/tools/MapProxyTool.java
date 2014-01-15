@@ -15,9 +15,9 @@ import javassist.CtMethod;
 import javassist.CtNewConstructor;
 import javassist.NotFoundException;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.envers.internal.entities.PropertyData;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 
 import static org.hibernate.envers.internal.tools.StringTools.capitalizeFirst;
 import static org.hibernate.envers.internal.tools.StringTools.getLastComponent;

@@ -33,7 +33,6 @@ import java.util.Map;
 
 import org.hibernate.MappingException;
 import org.hibernate.annotations.common.reflection.ReflectionManager;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.envers.configuration.internal.metadata.AuditEntityNameRegister;
 import org.hibernate.envers.configuration.internal.metadata.AuditMetadataGenerator;
@@ -45,6 +44,7 @@ import org.hibernate.envers.internal.tools.StringTools;
 import org.hibernate.envers.internal.tools.graph.GraphTopologicalSort;
 import org.hibernate.envers.strategy.AuditStrategy;
 import org.hibernate.mapping.PersistentClass;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

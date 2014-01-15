@@ -31,7 +31,6 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.util.ClassLoaderUtil;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cache.CacheException;
 import org.hibernate.cache.ehcache.internal.nonstop.NonstopAccessStrategyFactory;
 import org.hibernate.cache.ehcache.internal.regions.EhcacheCollectionRegion;
@@ -52,6 +51,7 @@ import org.hibernate.cache.spi.RegionFactory;
 import org.hibernate.cache.spi.TimestampsRegion;
 import org.hibernate.cache.spi.access.AccessType;
 import org.hibernate.cfg.Settings;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.spi.InjectService;
 
 import org.jboss.logging.Logger;

@@ -26,14 +26,14 @@ package org.hibernate.envers.configuration.internal;
 import java.util.Properties;
 
 import org.hibernate.MappingException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.HSQLDialect;
 import org.hibernate.envers.RevisionListener;
 import org.hibernate.envers.configuration.EnversSettings;
 import org.hibernate.envers.internal.tools.ReflectionTools;
 import org.hibernate.internal.util.config.ConfigurationHelper;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 
 /**
  * @author Adam Warski (adam at warski dot org)

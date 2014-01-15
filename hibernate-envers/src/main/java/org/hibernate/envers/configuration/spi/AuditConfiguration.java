@@ -30,7 +30,6 @@ import java.util.WeakHashMap;
 
 import org.hibernate.MappingException;
 import org.hibernate.annotations.common.reflection.ReflectionManager;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.envers.configuration.internal.AuditEntitiesConfiguration;
 import org.hibernate.envers.configuration.internal.EntitiesConfigurator;
@@ -49,6 +48,7 @@ import org.hibernate.envers.strategy.ValidityAuditStrategy;
 import org.hibernate.internal.util.ClassLoaderHelper;
 import org.hibernate.internal.util.ReflectHelper;
 import org.hibernate.property.Getter;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 
 /**
  * @author Adam Warski (adam at warski dot org)

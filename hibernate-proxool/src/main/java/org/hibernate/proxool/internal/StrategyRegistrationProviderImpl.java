@@ -26,10 +26,10 @@ package org.hibernate.proxool.internal;
 import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.boot.registry.selector.SimpleStrategyRegistrationImpl;
-import org.hibernate.boot.registry.selector.StrategyRegistration;
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.service.boot.selector.SimpleStrategyRegistrationImpl;
+import org.hibernate.service.boot.selector.StrategyRegistration;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 
 /**
  * Provides the {@link ProxoolConnectionProvider} to the

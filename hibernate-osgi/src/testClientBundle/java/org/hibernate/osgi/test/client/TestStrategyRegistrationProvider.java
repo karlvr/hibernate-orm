@@ -22,8 +22,8 @@ package org.hibernate.osgi.test.client;
 
 import java.util.Collections;
 
-import org.hibernate.boot.registry.selector.StrategyRegistration;
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
+import org.hibernate.service.boot.selector.StrategyRegistration;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 
 /**
  * @author Brett Meyer

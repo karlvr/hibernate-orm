@@ -31,7 +31,6 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceUnitInfo;
 
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -42,6 +41,7 @@ import org.hibernate.jpa.boot.spi.IntegratorProvider;
 import org.hibernate.jpa.boot.spi.StrategyRegistrationProviderList;
 import org.hibernate.jpa.boot.spi.TypeContributorList;
 import org.hibernate.metamodel.spi.TypeContributor;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleReference;
 
