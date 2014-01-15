@@ -22,14 +22,14 @@
  * Boston, MA  02110-1301  USA
  */
 package org.hibernate.service.boot.classloading.spi;
-import org.hibernate.HibernateException;
+import org.hibernate.service.spi.ServiceRegistryException;
 
 /**
  * Indicates a problem performing class loading.
  *
  * @author Steve Ebersole
  */
-public class ClassLoadingException extends HibernateException {
+public class ClassLoadingException extends ServiceRegistryException {
 	/**
 	 * Constructs a ClassLoadingException using the specified message and cause.
 	 *

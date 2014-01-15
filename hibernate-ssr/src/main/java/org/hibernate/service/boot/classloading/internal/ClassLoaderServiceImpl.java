@@ -38,9 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import org.hibernate.cfg.AvailableSettings;
-import org.hibernate.internal.CoreLogging;
-import org.hibernate.internal.util.ClassLoaderHelper;
 import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.jboss.logging.Logger;
@@ -51,7 +48,7 @@ import org.jboss.logging.Logger;
  * @author Steve Ebersole
  */
 public class ClassLoaderServiceImpl implements ClassLoaderService {
-	private static final Logger log = CoreLogging.logger( ClassLoaderServiceImpl.class );
+	private static final Logger log = Logger.getLogger( ClassLoaderServiceImpl.class );
 
 	private final Map<Class, ServiceLoader> serviceLoaders = new HashMap<Class, ServiceLoader>();
 	private AggregatedClassLoader aggregatedClassLoader;
@@ -108,51 +105,6 @@ public class ClassLoaderServiceImpl implements ClassLoaderService {
 		this.aggregatedClassLoader = new AggregatedClassLoader( orderedClassLoaderSet );
 	}
 
-	/**
-	 * No longer used/supported!
-	 *
-	 * @param configValues The config values
-	 *
-	 * @return The built service
-	 *
-	 * @deprecated No longer used/supported!
-	 */
-	@Deprecated
-	@SuppressWarnings({"UnusedDeclaration", "unchecked", "deprecation"})
-	public static ClassLoaderServiceImpl fromConfigSettings(Map configValues) {
-		final List<ClassLoader> providedClassLoaders = new ArrayList<ClassLoader>();
-
-		final Collection<ClassLoader> classLoaders = (Collection<ClassLoader>) configValues.get( AvailableSettings.CLASSLOADERS );
-		if ( classLoaders != null ) {
-			for ( ClassLoader classLoader : classLoaders ) {
-				providedClassLoaders.add( classLoader );
-			}
-		}
-
-		addIfSet( providedClassLoaders, AvailableSettings.APP_CLASSLOADER, configValues );
-		addIfSet( providedClassLoaders, AvailableSettings.RESOURCES_CLASSLOADER, configValues );
-		addIfSet( providedClassLoaders, AvailableSettings.HIBERNATE_CLASSLOADER, configValues );
-		addIfSet( providedClassLoaders, AvailableSettings.ENVIRONMENT_CLASSLOADER, configValues );
-
-		if ( providedClassLoaders.isEmpty() ) {
-			log.debugf( "Incoming config yielded no classloaders; adding standard SE ones" );
-			final ClassLoader tccl = locateTCCL();
-			if ( tccl != null ) {
-				providedClassLoaders.add( tccl );
-			}
-			providedClassLoaders.add( ClassLoaderServiceImpl.class.getClassLoader() );
-		}
-
-		return new ClassLoaderServiceImpl( providedClassLoaders );
-	}
-
-	private static void addIfSet(List<ClassLoader> providedClassLoaders, String name, Map configVales) {
-		final ClassLoader providedClassLoader = (ClassLoader) configVales.get( name );
-		if ( providedClassLoader != null ) {
-			providedClassLoaders.add( providedClassLoader );
-		}
-	}
-
 	private static ClassLoader locateSystemClassLoader() {
 		try {
 			return ClassLoader.getSystemClassLoader();
@@ -162,9 +114,9 @@ public class ClassLoaderServiceImpl implements ClassLoaderService {
 		}
 	}
 
-	private static ClassLoader locateTCCL() {
+	protected ClassLoader locateTCCL() {
 		try {
-			return ClassLoaderHelper.getContextClassLoader();
+			return Thread.currentThread().getContextClassLoader();
 		}
 		catch (Exception e) {
 			return null;
