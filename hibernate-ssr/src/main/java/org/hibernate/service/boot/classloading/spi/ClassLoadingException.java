@@ -21,7 +21,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.classloading.spi;
+package org.hibernate.service.boot.classloading.spi;
 import org.hibernate.HibernateException;
 
 /**

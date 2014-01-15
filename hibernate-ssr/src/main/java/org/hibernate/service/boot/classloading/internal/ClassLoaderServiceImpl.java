@@ -21,7 +21,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.classloading.internal;
+package org.hibernate.service.boot.classloading.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,12 +38,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.CoreLogging;
 import org.hibernate.internal.util.ClassLoaderHelper;
-
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.jboss.logging.Logger;
 
 /**
