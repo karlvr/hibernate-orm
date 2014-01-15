@@ -31,6 +31,7 @@ import org.hibernate.integrator.internal.IntegratorServiceImpl;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 import org.hibernate.service.boot.selector.spi.StrategySelector;
 
 /**
@@ -66,6 +67,28 @@ public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.
 	@Override
 	public BootstrapServiceRegistry build() {
 		return (BootstrapServiceRegistry) super.build();
+	}
+	
+	
+
+	@Override
+	public BootstrapServiceRegistryBuilder with(ClassLoader classLoader) {
+		return (BootstrapServiceRegistryBuilder) super.with(classLoader);
+	}
+
+	@Override
+	public BootstrapServiceRegistryBuilder with(ClassLoaderService classLoaderService) {
+		return (BootstrapServiceRegistryBuilder) super.with(classLoaderService);
+	}
+
+	@Override
+	public <T> BootstrapServiceRegistryBuilder withStrategySelector(Class<T> strategy, String name, Class<? extends T> implementation) {
+		return (BootstrapServiceRegistryBuilder) super.withStrategySelector(strategy, name, implementation);
+	}
+
+	@Override
+	public BootstrapServiceRegistryBuilder withStrategySelectors(StrategyRegistrationProvider strategyRegistrationProvider) {
+		return (BootstrapServiceRegistryBuilder) super.withStrategySelectors(strategyRegistrationProvider);
 	}
 
 	@Override
