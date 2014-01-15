@@ -21,12 +21,11 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.jmx.spi;
+package org.hibernate.service.spi;
 
 import javax.management.ObjectName;
 
 import org.hibernate.service.Service;
-import org.hibernate.service.spi.Manageable;
 
 /**
  * Service providing simplified access to JMX related features needed by Hibernate.
