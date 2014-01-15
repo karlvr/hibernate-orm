@@ -21,27 +21,21 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.internal;
+package org.hibernate.service.boot.internal;
 
-import java.util.LinkedHashSet;
-
-import org.hibernate.boot.registry.BootstrapServiceRegistry;
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.selector.internal.StrategySelectorImpl;
-import org.hibernate.boot.registry.selector.spi.StrategySelector;
-import org.hibernate.integrator.internal.IntegratorServiceImpl;
-import org.hibernate.integrator.spi.Integrator;
-import org.hibernate.integrator.spi.IntegratorService;
-import org.hibernate.internal.CoreMessageLogger;
 import org.hibernate.service.Service;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.BootstrapServiceRegistry;
+import org.hibernate.service.boot.classloading.internal.ClassLoaderServiceImpl;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.selector.internal.StrategySelectorImpl;
+import org.hibernate.service.boot.selector.spi.StrategySelector;
+import org.hibernate.service.internal.ServiceRegistryLogger;
 import org.hibernate.service.spi.ServiceBinding;
 import org.hibernate.service.spi.ServiceException;
 import org.hibernate.service.spi.ServiceInitiator;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.hibernate.service.spi.Stoppable;
-
 import org.jboss.logging.Logger;
 
 /**
@@ -54,50 +48,46 @@ import org.jboss.logging.Logger;
  * IMPL NOTE : Currently implements the deprecated {@link org.hibernate.service.BootstrapServiceRegistry} contract
  * so that the registry returned from the builder works on the deprecated sense.  Once
  * {@link org.hibernate.service.BootstrapServiceRegistry} goes away, this should be updated to instead implement
- * {@link org.hibernate.boot.registry.BootstrapServiceRegistry}.
+ * {@link org.hibernate.service.boot.BootstrapServiceRegistry}.
  *
  * @author Steve Ebersole
  */
 public class BootstrapServiceRegistryImpl
 		implements ServiceRegistryImplementor, BootstrapServiceRegistry, ServiceBinding.ServiceLifecycleOwner {
 
-	private static final CoreMessageLogger LOG = Logger.getMessageLogger(
-			CoreMessageLogger.class,
+	private static final ServiceRegistryLogger LOG = Logger.getMessageLogger(
+			ServiceRegistryLogger.class,
 			BootstrapServiceRegistryImpl.class.getName()
 	);
 	
-	private static final LinkedHashSet<Integrator> NO_INTEGRATORS = new LinkedHashSet<Integrator>();
-
 	private final ServiceBinding<ClassLoaderService> classLoaderServiceBinding;
 	private final ServiceBinding<StrategySelector> strategySelectorBinding;
-	private final ServiceBinding<IntegratorService> integratorServiceBinding;
 
 	/**
 	 * Constructs a BootstrapServiceRegistryImpl.
 	 *
-	 * Do not use directly generally speaking.  Use {@link org.hibernate.boot.registry.BootstrapServiceRegistryBuilder}
+	 * Do not use directly generally speaking.  Use {@link org.hibernate.service.boot.BootstrapServiceRegistryBuilder}
 	 * instead.
 	 *
-	 * @see org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
+	 * @see org.hibernate.service.boot.BootstrapServiceRegistryBuilder
 	 */
 	public BootstrapServiceRegistryImpl() {
-		this( new ClassLoaderServiceImpl(), NO_INTEGRATORS );
+		this( new ClassLoaderServiceImpl() );
 	}
 
 	/**
 	 * Constructs a BootstrapServiceRegistryImpl.
 	 *
-	 * Do not use directly generally speaking.  Use {@link org.hibernate.boot.registry.BootstrapServiceRegistryBuilder}
+	 * Do not use directly generally speaking.  Use {@link org.hibernate.service.boot.BootstrapServiceRegistryBuilder}
 	 * instead.
 	 *
 	 * @param classLoaderService The ClassLoaderService to use
 	 * @param providedIntegrators The group of explicitly provided integrators
 	 *
-	 * @see org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
+	 * @see org.hibernate.service.boot.BootstrapServiceRegistryBuilder
 	 */
 	public BootstrapServiceRegistryImpl(
-			ClassLoaderService classLoaderService,
-			LinkedHashSet<Integrator> providedIntegrators) {
+			ClassLoaderService classLoaderService) {
 		this.classLoaderServiceBinding = new ServiceBinding<ClassLoaderService>(
 				this,
 				ClassLoaderService.class,
@@ -110,31 +100,24 @@ public class BootstrapServiceRegistryImpl
 				StrategySelector.class,
 				strategySelector
 		);
-
-		this.integratorServiceBinding = new ServiceBinding<IntegratorService>(
-				this,
-				IntegratorService.class,
-				new IntegratorServiceImpl( providedIntegrators, classLoaderService )
-		);
 	}
 
 
 	/**
 	 * Constructs a BootstrapServiceRegistryImpl.
 	 *
-	 * Do not use directly generally speaking.  Use {@link org.hibernate.boot.registry.BootstrapServiceRegistryBuilder}
+	 * Do not use directly generally speaking.  Use {@link org.hibernate.service.boot.BootstrapServiceRegistryBuilder}
 	 * instead.
 	 *
 	 * @param classLoaderService The ClassLoaderService to use
 	 * @param strategySelector The StrategySelector to use
 	 * @param integratorService The IntegratorService to use
 	 *
-	 * @see org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
+	 * @see org.hibernate.service.boot.BootstrapServiceRegistryBuilder
 	 */
 	public BootstrapServiceRegistryImpl(
 			ClassLoaderService classLoaderService,
-			StrategySelector strategySelector,
-			IntegratorService integratorService) {
+			StrategySelector strategySelector) {
 		this.classLoaderServiceBinding = new ServiceBinding<ClassLoaderService>(
 				this,
 				ClassLoaderService.class,
@@ -145,12 +128,6 @@ public class BootstrapServiceRegistryImpl
 				this,
 				StrategySelector.class,
 				strategySelector
-		);
-
-		this.integratorServiceBinding = new ServiceBinding<IntegratorService>(
-				this,
-				IntegratorService.class,
-				integratorService
 		);
 	}
 
@@ -171,9 +148,6 @@ public class BootstrapServiceRegistryImpl
 		else if ( StrategySelector.class.equals( serviceRole) ) {
 			return (ServiceBinding<R>) strategySelectorBinding;
 		}
-		else if ( IntegratorService.class.equals( serviceRole ) ) {
-			return (ServiceBinding<R>) integratorServiceBinding;
-		}
 
 		return null;
 	}
@@ -182,10 +156,9 @@ public class BootstrapServiceRegistryImpl
 	public void destroy() {
 		destroy( classLoaderServiceBinding );
 		destroy( strategySelectorBinding );
-		destroy( integratorServiceBinding );
 	}
 	
-	private void destroy(ServiceBinding serviceBinding) {
+	protected void destroy(ServiceBinding serviceBinding) {
 		serviceBinding.getLifecycleOwner().stopService( serviceBinding );
 	}
 

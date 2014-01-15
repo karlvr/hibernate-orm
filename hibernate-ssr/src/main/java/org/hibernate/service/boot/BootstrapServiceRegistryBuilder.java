@@ -21,22 +21,20 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry;
+package org.hibernate.service.boot;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl;
-import org.hibernate.boot.registry.selector.StrategyRegistration;
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
-import org.hibernate.boot.registry.selector.internal.StrategySelectorBuilder;
-import org.hibernate.integrator.internal.IntegratorServiceImpl;
-import org.hibernate.integrator.spi.Integrator;
+import org.hibernate.service.boot.classloading.internal.ClassLoaderServiceImpl;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.internal.BootstrapServiceRegistryImpl;
+import org.hibernate.service.boot.selector.StrategyRegistration;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
+import org.hibernate.service.boot.selector.internal.StrategySelectorBuilder;
+import org.hibernate.service.boot.selector.spi.StrategySelector;
 
 /**
  * Builder for {@link BootstrapServiceRegistry} instances.  Provides registry for services needed for
@@ -50,21 +48,13 @@ import org.hibernate.integrator.spi.Integrator;
  * @see StandardServiceRegistryBuilder
  */
 public class BootstrapServiceRegistryBuilder {
-	private final LinkedHashSet<Integrator> providedIntegrators = new LinkedHashSet<Integrator>();
 	private List<ClassLoader> providedClassLoaders;
 	private ClassLoaderService providedClassLoaderService;
-	private StrategySelectorBuilder strategySelectorBuilder = new StrategySelectorBuilder();
+	private StrategySelectorBuilder strategySelectorBuilder;
 	
-	/**
-	 * Add an {@link Integrator} to be applied to the bootstrap registry.
-	 *
-	 * @param integrator The integrator to add.
-	 *
-	 * @return {@code this}, for method chaining
-	 */
-	public BootstrapServiceRegistryBuilder with(Integrator integrator) {
-		providedIntegrators.add( integrator );
-		return this;
+	public BootstrapServiceRegistryBuilder(StrategySelectorBuilder strategySelectorBuilder) {
+		super();
+		this.strategySelectorBuilder = strategySelectorBuilder;
 	}
 
 	/**
@@ -212,16 +202,13 @@ public class BootstrapServiceRegistryBuilder {
 			classLoaderService = providedClassLoaderService;
 		}
 
-		final IntegratorServiceImpl integratorService = new IntegratorServiceImpl(
-				providedIntegrators,
-				classLoaderService
-		);
+		return build(classLoaderService, strategySelectorBuilder.buildSelector( classLoaderService ));
+	}
 
-
+	protected BootstrapServiceRegistry build(ClassLoaderService classLoaderService, StrategySelector strategySelector) {
 		return new BootstrapServiceRegistryImpl(
 				classLoaderService,
-				strategySelectorBuilder.buildSelector( classLoaderService ),
-				integratorService
+				strategySelector
 		);
 	}
 }

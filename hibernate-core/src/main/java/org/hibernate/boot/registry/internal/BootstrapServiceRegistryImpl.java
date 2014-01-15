@@ -25,24 +25,15 @@ package org.hibernate.boot.registry.internal;
 
 import java.util.LinkedHashSet;
 
-import org.hibernate.boot.registry.BootstrapServiceRegistry;
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.selector.internal.StrategySelectorImpl;
-import org.hibernate.boot.registry.selector.spi.StrategySelector;
 import org.hibernate.integrator.internal.IntegratorServiceImpl;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.integrator.spi.IntegratorService;
-import org.hibernate.internal.CoreMessageLogger;
 import org.hibernate.service.Service;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.classloading.internal.ClassLoaderServiceImpl;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.selector.spi.StrategySelector;
 import org.hibernate.service.spi.ServiceBinding;
-import org.hibernate.service.spi.ServiceException;
-import org.hibernate.service.spi.ServiceInitiator;
-import org.hibernate.service.spi.ServiceRegistryImplementor;
-import org.hibernate.service.spi.Stoppable;
-
-import org.jboss.logging.Logger;
 
 /**
  * {@link ServiceRegistry} implementation containing specialized "bootstrap" services, specifically:<ul>
@@ -58,18 +49,10 @@ import org.jboss.logging.Logger;
  *
  * @author Steve Ebersole
  */
-public class BootstrapServiceRegistryImpl
-		implements ServiceRegistryImplementor, BootstrapServiceRegistry, ServiceBinding.ServiceLifecycleOwner {
+public class BootstrapServiceRegistryImpl extends org.hibernate.service.boot.internal.BootstrapServiceRegistryImpl {
 
-	private static final CoreMessageLogger LOG = Logger.getMessageLogger(
-			CoreMessageLogger.class,
-			BootstrapServiceRegistryImpl.class.getName()
-	);
-	
 	private static final LinkedHashSet<Integrator> NO_INTEGRATORS = new LinkedHashSet<Integrator>();
 
-	private final ServiceBinding<ClassLoaderService> classLoaderServiceBinding;
-	private final ServiceBinding<StrategySelector> strategySelectorBinding;
 	private final ServiceBinding<IntegratorService> integratorServiceBinding;
 
 	/**
@@ -98,18 +81,7 @@ public class BootstrapServiceRegistryImpl
 	public BootstrapServiceRegistryImpl(
 			ClassLoaderService classLoaderService,
 			LinkedHashSet<Integrator> providedIntegrators) {
-		this.classLoaderServiceBinding = new ServiceBinding<ClassLoaderService>(
-				this,
-				ClassLoaderService.class,
-				classLoaderService
-		);
-
-		final StrategySelectorImpl strategySelector = new StrategySelectorImpl( classLoaderService );
-		this.strategySelectorBinding = new ServiceBinding<StrategySelector>(
-				this,
-				StrategySelector.class,
-				strategySelector
-		);
+		super(classLoaderService);
 
 		this.integratorServiceBinding = new ServiceBinding<IntegratorService>(
 				this,
@@ -135,17 +107,7 @@ public class BootstrapServiceRegistryImpl
 			ClassLoaderService classLoaderService,
 			StrategySelector strategySelector,
 			IntegratorService integratorService) {
-		this.classLoaderServiceBinding = new ServiceBinding<ClassLoaderService>(
-				this,
-				ClassLoaderService.class,
-				classLoaderService
-		);
-
-		this.strategySelectorBinding = new ServiceBinding<StrategySelector>(
-				this,
-				StrategySelector.class,
-				strategySelector
-		);
+		super(classLoaderService, strategySelector);
 
 		this.integratorServiceBinding = new ServiceBinding<IntegratorService>(
 				this,
@@ -155,21 +117,12 @@ public class BootstrapServiceRegistryImpl
 	}
 
 
-
-	@Override
-	public <R extends Service> R getService(Class<R> serviceRole) {
-		final ServiceBinding<R> binding = locateServiceBinding( serviceRole );
-		return binding == null ? null : binding.getService();
-	}
-
 	@Override
 	@SuppressWarnings( {"unchecked"})
 	public <R extends Service> ServiceBinding<R> locateServiceBinding(Class<R> serviceRole) {
-		if ( ClassLoaderService.class.equals( serviceRole ) ) {
-			return (ServiceBinding<R>) classLoaderServiceBinding;
-		}
-		else if ( StrategySelector.class.equals( serviceRole) ) {
-			return (ServiceBinding<R>) strategySelectorBinding;
+		ServiceBinding<R> binding = super.locateServiceBinding(serviceRole);
+		if (binding != null) {
+			return binding;
 		}
 		else if ( IntegratorService.class.equals( serviceRole ) ) {
 			return (ServiceBinding<R>) integratorServiceBinding;
@@ -180,51 +133,8 @@ public class BootstrapServiceRegistryImpl
 
 	@Override
 	public void destroy() {
-		destroy( classLoaderServiceBinding );
-		destroy( strategySelectorBinding );
+		super.destroy();
 		destroy( integratorServiceBinding );
 	}
 	
-	private void destroy(ServiceBinding serviceBinding) {
-		serviceBinding.getLifecycleOwner().stopService( serviceBinding );
-	}
-
-	@Override
-	public ServiceRegistry getParentServiceRegistry() {
-		return null;
-	}
-
-	@Override
-	public <R extends Service> R initiateService(ServiceInitiator<R> serviceInitiator) {
-		throw new ServiceException( "Boot-strap registry should only contain provided services" );
-	}
-
-	@Override
-	public <R extends Service> void configureService(ServiceBinding<R> binding) {
-		throw new ServiceException( "Boot-strap registry should only contain provided services" );
-	}
-
-	@Override
-	public <R extends Service> void injectDependencies(ServiceBinding<R> binding) {
-		throw new ServiceException( "Boot-strap registry should only contain provided services" );
-	}
-
-	@Override
-	public <R extends Service> void startService(ServiceBinding<R> binding) {
-		throw new ServiceException( "Boot-strap registry should only contain provided services" );
-	}
-
-	@Override
-	public <R extends Service> void stopService(ServiceBinding<R> binding) {
-		final Service service = binding.getService();
-		if ( Stoppable.class.isInstance( service ) ) {
-			try {
-				( (Stoppable) service ).stop();
-			}
-			catch ( Exception e ) {
-				LOG.unableToStopService( service.getClass(), e.toString() );
-			}
-		}
-	}
-
 }

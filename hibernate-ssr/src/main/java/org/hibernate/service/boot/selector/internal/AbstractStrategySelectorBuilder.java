@@ -39,7 +39,7 @@ import org.jboss.logging.Logger;
  *
  * @author Steve Ebersole
  */
-public abstract class AbstractStrategySelectorBuilder {
+public abstract class AbstractStrategySelectorBuilder implements StrategySelectorBuilder {
 	private static final Logger log = Logger.getLogger( AbstractStrategySelectorBuilder.class );
 
 	private final List<StrategyRegistration> explicitStrategyRegistrations = new ArrayList<StrategyRegistration>();
@@ -54,6 +54,7 @@ public abstract class AbstractStrategySelectorBuilder {
 	 * compatible.
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public <T> void addExplicitStrategyRegistration(Class<T> strategy, Class<? extends T> implementation, String name) {
 		addExplicitStrategyRegistration( new SimpleStrategyRegistrationImpl<T>( strategy, implementation, name ) );
 	}
@@ -65,6 +66,7 @@ public abstract class AbstractStrategySelectorBuilder {
 	 * @param <T> The type of the strategy.  Used to make sure that the strategy and implementation are type
 	 * compatible.
 	 */
+	@Override
 	public <T> void addExplicitStrategyRegistration(StrategyRegistration<T> strategyRegistration) {
 		if ( !strategyRegistration.getStrategyRole().isInterface() ) {
 			// not good form...
