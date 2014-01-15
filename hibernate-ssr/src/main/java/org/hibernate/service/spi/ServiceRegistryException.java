@@ -1,7 +1,7 @@
 /*
  * Hibernate, Relational Persistence for Idiomatic Java
  *
- * Copyright (c) 2011, Red Hat Inc. or third-party contributors as
+ * Copyright (c) 2010, Red Hat Inc. or third-party contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Red Hat Inc.
@@ -21,21 +21,23 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.service.internal;
-
-import org.hibernate.service.spi.ServiceRegistryException;
+package org.hibernate.service.spi;
 
 /**
- * Indicates a problem generating a service proxy
- * 
+ * Indicates a problem with a service.
+ *
  * @author Steve Ebersole
  */
-public class ServiceProxyGenerationException extends ServiceRegistryException {
-	public ServiceProxyGenerationException(String string, Throwable root) {
-		super( string, root );
+public class ServiceRegistryException extends RuntimeException {
+	public ServiceRegistryException(String message, Throwable root) {
+		super( message, root );
 	}
 
-	public ServiceProxyGenerationException(Throwable root) {
-		super( root );
+	public ServiceRegistryException(String message) {
+		super( message );
+	}
+
+	public ServiceRegistryException(Throwable cause) {
+		super(cause);
 	}
 }

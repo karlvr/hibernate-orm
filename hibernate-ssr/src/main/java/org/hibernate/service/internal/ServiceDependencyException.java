@@ -22,14 +22,14 @@
  * Boston, MA  02110-1301  USA
  */
 package org.hibernate.service.internal;
-import org.hibernate.HibernateException;
+import org.hibernate.service.spi.ServiceRegistryException;
 
 /**
  * Indictes a problem processing service dependencies.
  *
  * @author Steve Ebersole
  */
-public class ServiceDependencyException extends HibernateException {
+public class ServiceDependencyException extends ServiceRegistryException {
 	public ServiceDependencyException(String string, Throwable root) {
 		super( string, root );
 	}

@@ -22,14 +22,14 @@
  * Boston, MA  02110-1301  USA
  */
 package org.hibernate.service;
-import org.hibernate.HibernateException;
+import org.hibernate.service.spi.ServiceRegistryException;
 
 /**
  * Indicates that an unkown service was requested from the registry.
  *
  * @author Steve Ebersole
  */
-public class UnknownServiceException extends HibernateException {
+public class UnknownServiceException extends ServiceRegistryException {
 	public final Class serviceRole;
 
 	public UnknownServiceException(Class serviceRole) {

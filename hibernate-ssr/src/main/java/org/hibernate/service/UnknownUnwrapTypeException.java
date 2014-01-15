@@ -23,12 +23,12 @@
  */
 package org.hibernate.service;
 
-import org.hibernate.HibernateException;
+import org.hibernate.service.spi.ServiceRegistryException;
 
 /**
  * @author Steve Ebersole
  */
-public class UnknownUnwrapTypeException extends HibernateException {
+public class UnknownUnwrapTypeException extends ServiceRegistryException {
 	public UnknownUnwrapTypeException(Class unwrapType) {
 		super( "Cannot unwrap to requested type [" + unwrapType.getName() + "]" );
 	}
