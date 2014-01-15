@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.MappingException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.jpa.event.spi.jpa.Callback;
 import org.hibernate.jpa.event.spi.jpa.ListenerFactory;
 import org.hibernate.metamodel.binding.EntityBinding;
 import org.hibernate.metamodel.source.MetadataImplementor;
 import org.hibernate.metamodel.source.binder.JpaCallbackClass;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
 import org.jboss.logging.Logger;

@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.engine.spi.CascadeStyles;
 import org.hibernate.engine.spi.CascadingAction;
@@ -65,6 +64,7 @@ import org.hibernate.jpa.event.spi.jpa.ListenerFactory;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.metamodel.binding.EntityBinding;
 import org.hibernate.metamodel.source.MetadataImplementor;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 

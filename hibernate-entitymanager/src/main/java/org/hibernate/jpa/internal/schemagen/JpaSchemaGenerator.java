@@ -39,7 +39,6 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import org.hibernate.HibernateException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
@@ -57,6 +56,7 @@ import org.hibernate.jpa.SchemaGenAction;
 import org.hibernate.jpa.SchemaGenSource;
 import org.hibernate.mapping.Table;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.tool.hbm2ddl.ImportSqlCommandExtractor;
 
 import org.jboss.logging.Logger;

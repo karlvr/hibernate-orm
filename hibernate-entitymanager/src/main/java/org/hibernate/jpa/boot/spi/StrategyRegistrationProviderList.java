@@ -25,7 +25,7 @@ package org.hibernate.jpa.boot.spi;
 
 import java.util.List;
 
-import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
+import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 
 /**
  * @author Brett Meyer

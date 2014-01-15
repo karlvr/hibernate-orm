@@ -85,8 +85,6 @@ import org.hibernate.StaleStateException;
 import org.hibernate.TransientObjectException;
 import org.hibernate.TypeMismatchException;
 import org.hibernate.UnresolvableObjectException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.lock.LockingStrategyException;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
@@ -129,6 +127,8 @@ import org.hibernate.jpa.internal.util.LockModeTypeHelper;
 import org.hibernate.procedure.ProcedureCallMemento;
 import org.hibernate.procedure.UnknownSqlResultSetMappingException;
 import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.hibernate.transform.BasicTransformerAdapter;
 import org.hibernate.type.Type;
 
