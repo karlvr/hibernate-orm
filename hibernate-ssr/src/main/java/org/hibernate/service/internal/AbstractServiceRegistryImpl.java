@@ -24,21 +24,16 @@
 package org.hibernate.service.internal;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.hibernate.boot.registry.BootstrapServiceRegistry;
-import org.hibernate.cfg.Environment;
-import org.hibernate.internal.CoreLogging;
-import org.hibernate.internal.CoreMessageLogger;
-import org.hibernate.internal.util.collections.CollectionHelper;
-import org.hibernate.internal.util.config.ConfigurationHelper;
-import org.hibernate.jmx.spi.JmxService;
 import org.hibernate.service.Service;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.UnknownServiceException;
 import org.hibernate.service.spi.InjectService;
+import org.hibernate.service.spi.JmxService;
 import org.hibernate.service.spi.Manageable;
 import org.hibernate.service.spi.ServiceBinding;
 import org.hibernate.service.spi.ServiceException;
@@ -47,6 +42,7 @@ import org.hibernate.service.spi.ServiceRegistryAwareService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.hibernate.service.spi.Startable;
 import org.hibernate.service.spi.Stoppable;
+import org.jboss.logging.Logger;
 
 /**
  * Basic implementation of the ServiceRegistry and ServiceRegistryImplementor contracts
@@ -56,20 +52,20 @@ import org.hibernate.service.spi.Stoppable;
 public abstract class AbstractServiceRegistryImpl
 		implements ServiceRegistryImplementor, ServiceBinding.ServiceLifecycleOwner {
 
-	private static final CoreMessageLogger log = CoreLogging.messageLogger( AbstractServiceRegistryImpl.class );
+	private static final ServiceRegistryLogger log = Logger.getMessageLogger( ServiceRegistryLogger.class, AbstractServiceRegistryImpl.class.getName() );
 
 	public static final String ALLOW_CRAWLING = "hibernate.service.allow_crawling";
 
 	private final ServiceRegistryImplementor parent;
 	private final boolean allowCrawling;
 
-	private final ConcurrentHashMap<Class,ServiceBinding> serviceBindingMap = CollectionHelper.concurrentMap( 20 );
+	private final ConcurrentHashMap<Class,ServiceBinding> serviceBindingMap = new ConcurrentHashMap<Class, ServiceBinding>(36);
 	private ConcurrentHashMap<Class,Class> roleXref;
 
 	// IMPL NOTE : the list used for ordered destruction.  Cannot used map above because we need to
 	// iterate it in reverse order which is only available through ListIterator
 	// assume 20 services for initial sizing
-	private final List<ServiceBinding> serviceBindingList = CollectionHelper.arrayList( 20 );
+	private final List<ServiceBinding> serviceBindingList = new ArrayList<ServiceBinding>( 20 );
 
 	@SuppressWarnings( {"UnusedDeclaration"})
 	protected AbstractServiceRegistryImpl() {
@@ -77,16 +73,24 @@ public abstract class AbstractServiceRegistryImpl
 	}
 
 	protected AbstractServiceRegistryImpl(ServiceRegistryImplementor parent) {
-		this.parent = parent;
-		this.allowCrawling = ConfigurationHelper.getBoolean( ALLOW_CRAWLING, Environment.getProperties(), true );
+		this(parent, true);
 	}
 
-	public AbstractServiceRegistryImpl(BootstrapServiceRegistry bootstrapServiceRegistry) {
-		if ( ! ServiceRegistryImplementor.class.isInstance( bootstrapServiceRegistry ) ) {
+	protected AbstractServiceRegistryImpl(ServiceRegistryImplementor parent, boolean allowCrawling) {
+		this.parent = parent;
+		this.allowCrawling = allowCrawling;
+	}
+
+	public AbstractServiceRegistryImpl(ServiceRegistry serviceRegistry) {
+		this(serviceRegistry, true);
+	}
+	
+	public AbstractServiceRegistryImpl(ServiceRegistry serviceRegistry, boolean allowCrawling) {
+		if ( ! ServiceRegistryImplementor.class.isInstance( serviceRegistry ) ) {
 			throw new IllegalArgumentException( "ServiceRegistry parent needs to implement ServiceRegistryImplementor" );
 		}
-		this.parent = (ServiceRegistryImplementor) bootstrapServiceRegistry;
-		this.allowCrawling = ConfigurationHelper.getBoolean( ALLOW_CRAWLING, Environment.getProperties(), true );
+		this.parent = (ServiceRegistryImplementor) serviceRegistry;
+		this.allowCrawling = allowCrawling;
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -161,7 +165,7 @@ public abstract class AbstractServiceRegistryImpl
 
 	private void registerAlternate(Class alternate, Class target) {
 		if ( roleXref == null ) {
-			roleXref = CollectionHelper.concurrentMap( 20 );
+			roleXref = new ConcurrentHashMap<Class, Class>(36);
 		}
 		roleXref.put( alternate, target );
 	}
