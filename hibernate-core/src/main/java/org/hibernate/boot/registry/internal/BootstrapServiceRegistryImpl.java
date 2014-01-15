@@ -25,6 +25,7 @@ package org.hibernate.boot.registry.internal;
 
 import java.util.LinkedHashSet;
 
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.integrator.internal.IntegratorServiceImpl;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.integrator.spi.IntegratorService;
@@ -49,7 +50,7 @@ import org.hibernate.service.spi.ServiceBinding;
  *
  * @author Steve Ebersole
  */
-public class BootstrapServiceRegistryImpl extends org.hibernate.service.boot.internal.BootstrapServiceRegistryImpl {
+public class BootstrapServiceRegistryImpl extends org.hibernate.service.boot.internal.BootstrapServiceRegistryImpl implements BootstrapServiceRegistry {
 
 	private static final LinkedHashSet<Integrator> NO_INTEGRATORS = new LinkedHashSet<Integrator>();
 

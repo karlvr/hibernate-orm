@@ -29,7 +29,7 @@ import org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl;
 import org.hibernate.boot.registry.selector.internal.StrategySelectorBuilder;
 import org.hibernate.integrator.internal.IntegratorServiceImpl;
 import org.hibernate.integrator.spi.Integrator;
-import org.hibernate.service.boot.BootstrapServiceRegistry;
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.boot.selector.spi.StrategySelector;
 
@@ -62,8 +62,11 @@ public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.
 		providedIntegrators.add( integrator );
 		return this;
 	}
-	
-	
+
+	@Override
+	public BootstrapServiceRegistry build() {
+		return (BootstrapServiceRegistry) super.build();
+	}
 
 	@Override
 	protected BootstrapServiceRegistry build(ClassLoaderService classLoaderService, StrategySelector strategySelector) {
