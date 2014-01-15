@@ -24,7 +24,7 @@
 package org.hibernate.jmx.internal;
 import javax.management.ObjectName;
 
-import org.hibernate.jmx.spi.JmxService;
+import org.hibernate.service.spi.JmxService;
 import org.hibernate.service.spi.Manageable;
 
 /**

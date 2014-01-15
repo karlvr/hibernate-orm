@@ -36,8 +36,8 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Environment;
 import org.hibernate.internal.CoreMessageLogger;
 import org.hibernate.internal.util.config.ConfigurationHelper;
-import org.hibernate.jmx.spi.JmxService;
 import org.hibernate.service.Service;
+import org.hibernate.service.spi.JmxService;
 import org.hibernate.service.spi.Manageable;
 import org.hibernate.service.spi.Stoppable;
 

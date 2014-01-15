@@ -28,7 +28,7 @@ import java.util.Map;
 import org.hibernate.boot.registry.StandardServiceInitiator;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.internal.util.config.ConfigurationHelper;
-import org.hibernate.jmx.spi.JmxService;
+import org.hibernate.service.spi.JmxService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 
 /**
