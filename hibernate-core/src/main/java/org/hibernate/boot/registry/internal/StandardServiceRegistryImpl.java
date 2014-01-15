@@ -29,6 +29,8 @@ import java.util.Map;
 import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceInitiator;
 import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.cfg.Environment;
+import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.service.Service;
 import org.hibernate.service.internal.AbstractServiceRegistryImpl;
 import org.hibernate.service.internal.ProvidedService;
@@ -62,7 +64,7 @@ public class StandardServiceRegistryImpl extends AbstractServiceRegistryImpl imp
 			List<StandardServiceInitiator> serviceInitiators,
 			List<ProvidedService> providedServices,
 			Map<?, ?> configurationValues) {
-		super( bootstrapServiceRegistry );
+		super( bootstrapServiceRegistry, ConfigurationHelper.getBoolean( ALLOW_CRAWLING, Environment.getProperties(), true ));
 
 		this.configurationValues = configurationValues;
 
