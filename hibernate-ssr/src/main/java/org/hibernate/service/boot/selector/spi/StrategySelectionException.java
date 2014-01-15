@@ -23,14 +23,14 @@
  */
 package org.hibernate.service.boot.selector.spi;
 
-import org.hibernate.HibernateException;
+import org.hibernate.service.spi.ServiceRegistryException;
 
 /**
  * Indicates a problem performing the selection/resolution.
  *
  * @author Steve Ebersole
  */
-public class StrategySelectionException extends HibernateException {
+public class StrategySelectionException extends ServiceRegistryException {
 	/**
 	 * Constructs a StrategySelectionException using the specified message.
 	 *
