@@ -1,0 +1,24 @@
+dependencies {
+}
+
+def pomName() {
+    return 'Hibernate standalone service registry functionality'
+}
+
+def pomDescription() {
+    return 'Standalone service registry functionality from Hibernate'
+}
+
+def osgiDescription() {
+	return pomDescription()
+}
+
+jar {
+    manifest {
+        mainAttributes( 'Main-Class': 'org.hibernate.Version' )
+    }
+}
+
+ext {
+}
+

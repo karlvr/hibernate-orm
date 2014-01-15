@@ -15,6 +15,7 @@ dependencies {
     compile( libraries.javassist )
     compile( libraries.antlr )
     compile( libraries.jandex )
+    compile( project(':hibernate-ssr') )
 
     antlr( libraries.antlr )
 
