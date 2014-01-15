@@ -21,7 +21,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.selector.spi;
+package org.hibernate.service.boot.selector.spi;
 
 import org.hibernate.service.Service;
 

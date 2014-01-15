@@ -21,19 +21,32 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.selector;
+package org.hibernate.service.boot.selector.spi;
+
+import org.hibernate.HibernateException;
 
 /**
- * Responsible for providing the registrations of strategy selector(s).  Can be registered directly with the
- * {@link org.hibernate.boot.registry.BootstrapServiceRegistry} or located via discovery.
+ * Indicates a problem performing the selection/resolution.
  *
  * @author Steve Ebersole
  */
-public interface StrategyRegistrationProvider {
+public class StrategySelectionException extends HibernateException {
 	/**
-	 * Get all StrategyRegistrations announced by this provider.
+	 * Constructs a StrategySelectionException using the specified message.
 	 *
-	 * @return All StrategyRegistrations
+	 * @param message A message explaining the exception condition.
 	 */
-	public Iterable<StrategyRegistration> getStrategyRegistrations();
+	public StrategySelectionException(String message) {
+		super( message );
+	}
+
+	/**
+	 * Constructs a StrategySelectionException using the specified message and cause.
+	 *
+	 * @param message A message explaining the exception condition.
+	 * @param cause The underlying cause.
+	 */
+	public StrategySelectionException(String message, Throwable cause) {
+		super( message, cause );
+	}
 }

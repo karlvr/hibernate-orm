@@ -21,7 +21,7 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.selector;
+package org.hibernate.service.boot.selector;
 
 /**
  * Describes the registration of a named strategy implementation.  A strategy + selector name should resolve

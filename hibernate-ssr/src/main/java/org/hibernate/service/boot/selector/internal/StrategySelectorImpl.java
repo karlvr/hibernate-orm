@@ -21,17 +21,16 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package org.hibernate.boot.registry.selector.internal;
+package org.hibernate.service.boot.selector.internal;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
-import org.hibernate.boot.registry.selector.spi.StrategySelectionException;
-import org.hibernate.boot.registry.selector.spi.StrategySelector;
-
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
+import org.hibernate.service.boot.selector.spi.StrategySelectionException;
+import org.hibernate.service.boot.selector.spi.StrategySelector;
 import org.jboss.logging.Logger;
 
 /**
