@@ -27,13 +27,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.hibernate.boot.registry.BootstrapServiceRegistry;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.jaxb.Origin;
 import org.hibernate.internal.jaxb.SourceType;
 import org.hibernate.internal.jaxb.cfg.JaxbHibernateConfiguration;
 import org.hibernate.internal.util.ValueHolder;
 import org.hibernate.internal.util.config.ConfigurationException;
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.internal.JaxbProcessor;
 
 import org.jboss.logging.Logger;

@@ -25,11 +25,11 @@ package org.hibernate.engine.transaction.jta.platform.internal;
 
 import java.util.Map;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformProvider;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformResolver;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 
 import org.jboss.logging.Logger;

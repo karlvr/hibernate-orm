@@ -40,7 +40,7 @@ import org.jboss.logging.Logger;
 /**
  * A simple class to centralize logic needed to locate config files on the system.
  *
- * @todo : Update usages to use {@link org.hibernate.boot.registry.classloading.spi.ClassLoaderService}
+ * @todo : Update usages to use {@link org.hibernate.service.boot.classloading.spi.ClassLoaderService}
  *
  * @author Steve Ebersole
  */

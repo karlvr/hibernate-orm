@@ -31,8 +31,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.MappingException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
-import org.hibernate.boot.registry.classloading.spi.ClassLoadingException;
 import org.hibernate.engine.spi.CascadeStyle;
 import org.hibernate.engine.spi.CascadeStyles;
 import org.hibernate.engine.spi.ExecuteUpdateResultCheckStyle;
@@ -56,6 +54,8 @@ import org.hibernate.metamodel.source.binder.ExplicitHibernateTypeSource;
 import org.hibernate.metamodel.source.binder.MetaAttributeSource;
 import org.hibernate.metamodel.source.binder.RelationalValueSource;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 
 /**
  * @author Steve Ebersole

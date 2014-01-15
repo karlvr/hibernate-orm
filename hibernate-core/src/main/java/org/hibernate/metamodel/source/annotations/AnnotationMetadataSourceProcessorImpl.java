@@ -31,7 +31,6 @@ import java.util.Set;
 
 import org.hibernate.AssertionFailure;
 import org.hibernate.HibernateException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.jaxb.JaxbRoot;
 import org.hibernate.internal.jaxb.mapping.orm.JaxbEntityMappings;
 import org.hibernate.metamodel.MetadataSources;
@@ -48,7 +47,7 @@ import org.hibernate.metamodel.source.annotations.xml.mocker.EntityMappingsMocke
 import org.hibernate.metamodel.source.binder.Binder;
 import org.hibernate.metamodel.source.binder.EntityHierarchy;
 import org.hibernate.metamodel.source.internal.MetadataImpl;
-
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.jboss.jandex.Index;
 import org.jboss.jandex.Indexer;
 import org.jboss.logging.Logger;

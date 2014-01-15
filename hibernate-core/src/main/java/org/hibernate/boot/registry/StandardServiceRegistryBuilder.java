@@ -29,7 +29,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.boot.registry.internal.StandardServiceRegistryImpl;
 import org.hibernate.cfg.Environment;
 import org.hibernate.integrator.spi.Integrator;
@@ -41,6 +40,7 @@ import org.hibernate.service.Service;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.StandardServiceInitiators;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.internal.ProvidedService;
 import org.hibernate.service.spi.ServiceContributor;
 

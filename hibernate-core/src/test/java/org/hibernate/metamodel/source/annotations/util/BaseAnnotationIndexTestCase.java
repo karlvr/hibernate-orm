@@ -39,7 +39,7 @@ import org.hibernate.metamodel.source.annotations.entity.EmbeddableHierarchy;
 import org.hibernate.metamodel.source.binder.EntityHierarchy;
 import org.hibernate.metamodel.source.internal.MetadataImpl;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.testing.junit4.BaseUnitTestCase;
 
 /**

@@ -34,7 +34,6 @@ import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.registry.selector.spi.StrategySelectionException;
 import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.DB2400Dialect;
 import org.hibernate.dialect.DB2Dialect;
@@ -67,6 +66,7 @@ import org.hibernate.engine.jdbc.dialect.internal.StandardDialectResolver;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfo;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfoSource;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
+import org.hibernate.service.boot.selector.spi.StrategySelectionException;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 
 import org.junit.Before;

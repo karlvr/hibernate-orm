@@ -23,8 +23,8 @@
  */
 package org.hibernate.metamodel.domain;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.util.ValueHolder;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 
 /**
  * Models the naming of a Java type where we may not have access to that type's {@link Class} reference.  Generally

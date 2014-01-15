@@ -27,13 +27,13 @@ import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.annotations.common.util.StringHelper;
-import org.hibernate.boot.registry.selector.spi.StrategySelector;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.dialect.spi.DialectFactory;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfo;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolutionInfoSource;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
+import org.hibernate.service.boot.selector.spi.StrategySelector;
 import org.hibernate.service.spi.ServiceRegistryAwareService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 

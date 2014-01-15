@@ -15,11 +15,11 @@ import javax.persistence.Entity;
 
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.internal.util.ConfigHelper;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.classloading.internal.ClassLoaderServiceImpl;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.testing.TestForIssue;
 import org.junit.Assert;
 import org.junit.Test;

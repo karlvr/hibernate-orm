@@ -26,7 +26,6 @@ package org.hibernate.metamodel.source.internal;
 import javax.persistence.SharedCacheMode;
 
 import org.hibernate.HibernateException;
-import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cache.spi.access.AccessType;
@@ -39,7 +38,7 @@ import org.hibernate.metamodel.MetadataBuilder;
 import org.hibernate.metamodel.MetadataSourceProcessingOrder;
 import org.hibernate.metamodel.MetadataSources;
 import org.hibernate.service.ServiceRegistry;
-
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
 import org.jboss.logging.Logger;
 
 /**

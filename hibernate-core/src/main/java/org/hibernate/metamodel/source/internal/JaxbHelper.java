@@ -45,7 +45,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.jaxb.JaxbRoot;
 import org.hibernate.internal.jaxb.Origin;
 import org.hibernate.internal.jaxb.mapping.hbm.JaxbHibernateMapping;
@@ -53,7 +52,7 @@ import org.hibernate.internal.jaxb.mapping.orm.JaxbEntityMappings;
 import org.hibernate.metamodel.MetadataSources;
 import org.hibernate.metamodel.source.MappingException;
 import org.hibernate.metamodel.source.XsdException;
-
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.jboss.logging.Logger;
 
 import org.w3c.dom.Document;

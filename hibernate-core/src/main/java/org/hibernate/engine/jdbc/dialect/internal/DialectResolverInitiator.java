@@ -27,10 +27,10 @@ import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.boot.registry.StandardServiceInitiator;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
 import org.hibernate.internal.util.StringHelper;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.spi.ServiceException;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 

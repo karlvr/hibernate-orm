@@ -27,8 +27,8 @@ import java.lang.reflect.Method;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.engine.transaction.jta.platform.spi.JtaPlatformException;
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 
 /**
  * @author Steve Ebersole

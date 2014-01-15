@@ -31,12 +31,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.boot.registry.classloading.spi.ClassLoaderService;
 import org.hibernate.internal.jaxb.mapping.orm.JaxbCascadeType;
 import org.hibernate.internal.util.StringHelper;
 import org.hibernate.metamodel.source.annotations.JPADotNames;
 import org.hibernate.service.ServiceRegistry;
-
+import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.AnnotationTarget;
 import org.jboss.jandex.AnnotationValue;
