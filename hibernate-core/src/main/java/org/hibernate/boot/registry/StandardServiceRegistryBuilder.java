@@ -39,6 +39,7 @@ import org.hibernate.internal.util.config.ConfigurationHelper;
 import org.hibernate.service.ConfigLoader;
 import org.hibernate.service.Service;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.StandardServiceInitiators;
 import org.hibernate.service.internal.ProvidedService;
 import org.hibernate.service.spi.ServiceContributor;
@@ -51,7 +52,7 @@ import org.hibernate.service.spi.ServiceContributor;
  * @see StandardServiceRegistryImpl
  * @see org.hibernate.boot.registry.BootstrapServiceRegistryBuilder
  */
-public class StandardServiceRegistryBuilder {
+public class StandardServiceRegistryBuilder implements ServiceRegistryBuilder {
 	/**
 	 * The default resource name for a hibernate configuration xml file.
 	 */
@@ -208,6 +209,7 @@ public class StandardServiceRegistryBuilder {
 	 * @return The StandardServiceRegistry.
 	 */
 	@SuppressWarnings("unchecked")
+	@Override
 	public StandardServiceRegistry build() {
 		final Map<?,?> settingsCopy = new HashMap();
 		settingsCopy.putAll( settings );
