@@ -52,7 +52,7 @@ import org.jboss.logging.Logger;
 public abstract class AbstractServiceRegistryImpl
 		implements ServiceRegistryImplementor, ServiceBinding.ServiceLifecycleOwner {
 
-	private static final ServiceRegistryLogger log = Logger.getMessageLogger( ServiceRegistryLogger.class, AbstractServiceRegistryImpl.class.getName() );
+	private static final ServiceRegistryMessageLogger log = Logger.getMessageLogger( ServiceRegistryMessageLogger.class, AbstractServiceRegistryImpl.class.getName() );
 
 	public static final String ALLOW_CRAWLING = "hibernate.service.allow_crawling";
 

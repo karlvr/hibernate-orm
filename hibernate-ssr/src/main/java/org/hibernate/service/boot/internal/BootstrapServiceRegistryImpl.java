@@ -30,7 +30,7 @@ import org.hibernate.service.boot.classloading.internal.ClassLoaderServiceImpl;
 import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.boot.selector.internal.StrategySelectorImpl;
 import org.hibernate.service.boot.selector.spi.StrategySelector;
-import org.hibernate.service.internal.ServiceRegistryLogger;
+import org.hibernate.service.internal.ServiceRegistryMessageLogger;
 import org.hibernate.service.spi.ServiceBinding;
 import org.hibernate.service.spi.ServiceException;
 import org.hibernate.service.spi.ServiceInitiator;
@@ -55,8 +55,8 @@ import org.jboss.logging.Logger;
 public class BootstrapServiceRegistryImpl
 		implements ServiceRegistryImplementor, BootstrapServiceRegistry, ServiceBinding.ServiceLifecycleOwner {
 
-	private static final ServiceRegistryLogger LOG = Logger.getMessageLogger(
-			ServiceRegistryLogger.class,
+	private static final ServiceRegistryMessageLogger LOG = Logger.getMessageLogger(
+			ServiceRegistryMessageLogger.class,
 			BootstrapServiceRegistryImpl.class.getName()
 	);
 	

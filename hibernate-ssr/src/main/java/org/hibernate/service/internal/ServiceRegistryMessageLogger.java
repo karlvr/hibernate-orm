@@ -6,8 +6,10 @@ import static org.jboss.logging.Logger.Level.WARN;
 import org.jboss.logging.BasicLogger;
 import org.jboss.logging.annotations.LogMessage;
 import org.jboss.logging.annotations.Message;
+import org.jboss.logging.annotations.MessageLogger;
 
-public interface ServiceRegistryLogger extends BasicLogger {
+@MessageLogger(projectCode = "HHH")
+public interface ServiceRegistryMessageLogger extends BasicLogger {
 
 	@LogMessage(level = WARN)
 	@Message(
