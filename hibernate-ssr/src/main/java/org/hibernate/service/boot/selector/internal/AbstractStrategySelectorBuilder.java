@@ -43,6 +43,13 @@ public abstract class AbstractStrategySelectorBuilder implements StrategySelecto
 	private static final Logger log = Logger.getLogger( AbstractStrategySelectorBuilder.class );
 
 	private final List<StrategyRegistration> explicitStrategyRegistrations = new ArrayList<StrategyRegistration>();
+	
+	private Class<? extends StrategyRegistrationProvider> strategyRegistrationProviderClass;
+	
+	public AbstractStrategySelectorBuilder(Class<? extends StrategyRegistrationProvider> strategyRegistrationProviderClass) {
+		super();
+		this.strategyRegistrationProviderClass = strategyRegistrationProviderClass;
+	}
 
 	/**
 	 * Adds an explicit (as opposed to discovered) strategy registration.
@@ -98,7 +105,7 @@ public abstract class AbstractStrategySelectorBuilder implements StrategySelecto
 		addBaseline( strategySelector );
 
 		// apply auto-discovered registrations
-		for ( StrategyRegistrationProvider provider : classLoaderService.loadJavaServices( StrategyRegistrationProvider.class ) ) {
+		for ( StrategyRegistrationProvider provider : classLoaderService.loadJavaServices( strategyRegistrationProviderClass ) ) {
 			for ( StrategyRegistration discoveredStrategyRegistration : provider.getStrategyRegistrations() ) {
 				applyFromStrategyRegistration( strategySelector, discoveredStrategyRegistration );
 			}

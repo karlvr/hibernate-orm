@@ -26,10 +26,10 @@ package org.hibernate.cache.ehcache;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
 import org.hibernate.cache.spi.RegionFactory;
 import org.hibernate.service.boot.selector.SimpleStrategyRegistrationImpl;
 import org.hibernate.service.boot.selector.StrategyRegistration;
-import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 
 /**
  * Makes the 2 contained region factory implementations available to the Hibernate

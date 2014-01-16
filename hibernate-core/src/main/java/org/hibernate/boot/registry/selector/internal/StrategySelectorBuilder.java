@@ -1,5 +1,6 @@
 package org.hibernate.boot.registry.selector.internal;
 
+import org.hibernate.boot.registry.selector.StrategyRegistrationProvider;
 import org.hibernate.dialect.CUBRIDDialect;
 import org.hibernate.dialect.Cache71Dialect;
 import org.hibernate.dialect.DB2390Dialect;
@@ -68,6 +69,10 @@ import org.hibernate.service.boot.selector.internal.StrategySelectorImpl;
 
 
 public class StrategySelectorBuilder extends org.hibernate.service.boot.selector.internal.AbstractStrategySelectorBuilder {
+
+	public StrategySelectorBuilder() {
+		super(StrategyRegistrationProvider.class);
+	}
 
 	@Override
 	protected void addBaseline(StrategySelectorImpl strategySelector) {
