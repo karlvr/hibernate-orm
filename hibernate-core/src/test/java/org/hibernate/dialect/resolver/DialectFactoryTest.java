@@ -118,7 +118,7 @@ public class DialectFactoryTest extends BaseUnitTestCase {
 			fail();
 		}
 		catch ( HibernateException e ) {
-			assertEquals( "unexpected exception type", StrategySelectionException.class, e.getClass() );
+			assertEquals( "unexpected exception type", StrategySelectionException.class, e.getCause().getClass() );
 		}
 
 		configValues.put( Environment.DIALECT, "java.lang.Object" );

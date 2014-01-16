@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.boot.classloading.spi.ClassLoadingException;
 import org.hibernate.testing.ServiceRegistryBuilder;
 
 /**
@@ -43,7 +44,7 @@ public class SecuredBindingTest {
 			}
             Assert.fail( "Driver property overriding should work" );
 		}
-		catch (HibernateException he) {
+		catch (ClassLoadingException he) {
 			//success
 		}
 		finally {
