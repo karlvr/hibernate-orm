@@ -47,12 +47,12 @@ import org.hibernate.service.boot.selector.spi.StrategySelector;
  *
  * @see StandardServiceRegistryBuilder
  */
-public class BootstrapServiceRegistryBuilder {
+public abstract class AbstractBootstrapServiceRegistryBuilder {
 	private List<ClassLoader> providedClassLoaders;
 	private ClassLoaderService providedClassLoaderService;
 	private StrategySelectorBuilder strategySelectorBuilder;
 	
-	public BootstrapServiceRegistryBuilder(StrategySelectorBuilder strategySelectorBuilder) {
+	public AbstractBootstrapServiceRegistryBuilder(StrategySelectorBuilder strategySelectorBuilder) {
 		super();
 		this.strategySelectorBuilder = strategySelectorBuilder;
 	}
@@ -64,7 +64,7 @@ public class BootstrapServiceRegistryBuilder {
 	 *
 	 * @return {@code this}, for method chaining
 	 */
-	public BootstrapServiceRegistryBuilder with(ClassLoader classLoader) {
+	public AbstractBootstrapServiceRegistryBuilder with(ClassLoader classLoader) {
 		if ( providedClassLoaders == null ) {
 			providedClassLoaders = new ArrayList<ClassLoader>();
 		}
@@ -79,69 +79,9 @@ public class BootstrapServiceRegistryBuilder {
 	 *
 	 * @return {@code this}, for method chaining
 	 */
-	public BootstrapServiceRegistryBuilder with(ClassLoaderService classLoaderService) {
+	public AbstractBootstrapServiceRegistryBuilder with(ClassLoaderService classLoaderService) {
 		providedClassLoaderService = classLoaderService;
 		return this;
-	}
-
-	/**
-	 * Applies the specified {@link ClassLoader} as the application class loader for the bootstrap registry.
-	 *
-	 * @param classLoader The class loader to use
-	 *
-	 * @return {@code this}, for method chaining
-	 *
-	 * @deprecated Use {@link #with(ClassLoader)} instead
-	 */
-	@Deprecated
-	@SuppressWarnings( {"UnusedDeclaration"})
-	public BootstrapServiceRegistryBuilder withApplicationClassLoader(ClassLoader classLoader) {
-		return with( classLoader );
-	}
-
-	/**
-	 * Applies the specified {@link ClassLoader} as the resource class loader for the bootstrap registry.
-	 *
-	 * @param classLoader The class loader to use
-	 *
-	 * @return {@code this}, for method chaining
-	 *
-	 * @deprecated Use {@link #with(ClassLoader)} instead
-	 */
-	@Deprecated
-	@SuppressWarnings( {"UnusedDeclaration"})
-	public BootstrapServiceRegistryBuilder withResourceClassLoader(ClassLoader classLoader) {
-		return with( classLoader );
-	}
-
-	/**
-	 * Applies the specified {@link ClassLoader} as the Hibernate class loader for the bootstrap registry.
-	 *
-	 * @param classLoader The class loader to use
-	 *
-	 * @return {@code this}, for method chaining
-	 *
-	 * @deprecated Use {@link #with(ClassLoader)} instead
-	 */
-	@Deprecated
-	@SuppressWarnings( {"UnusedDeclaration"})
-	public BootstrapServiceRegistryBuilder withHibernateClassLoader(ClassLoader classLoader) {
-		return with( classLoader );
-	}
-
-	/**
-	 * Applies the specified {@link ClassLoader} as the environment (or system) class loader for the bootstrap registry.
-	 *
-	 * @param classLoader The class loader to use
-	 *
-	 * @return {@code this}, for method chaining
-	 *
-	 * @deprecated Use {@link #with(ClassLoader)} instead
-	 */
-	@Deprecated
-	@SuppressWarnings( {"UnusedDeclaration"})
-	public BootstrapServiceRegistryBuilder withEnvironmentClassLoader(ClassLoader classLoader) {
-		return with( classLoader );
 	}
 
 	/**
@@ -158,7 +98,7 @@ public class BootstrapServiceRegistryBuilder {
 	 * @see org.hibernate.boot.registry.selector.spi.StrategySelector#registerStrategyImplementor(Class, String, Class)
 	 */
 	@SuppressWarnings( {"UnusedDeclaration"})
-	public <T> BootstrapServiceRegistryBuilder withStrategySelector(Class<T> strategy, String name, Class<? extends T> implementation) {
+	public <T> AbstractBootstrapServiceRegistryBuilder withStrategySelector(Class<T> strategy, String name, Class<? extends T> implementation) {
 		this.strategySelectorBuilder.addExplicitStrategyRegistration( strategy, implementation, name );
 		return this;
 	}
@@ -173,7 +113,7 @@ public class BootstrapServiceRegistryBuilder {
 	 * @see org.hibernate.boot.registry.selector.spi.StrategySelector#registerStrategyImplementor(Class, String, Class)
 	 */
 	@SuppressWarnings( {"UnusedDeclaration"})
-	public BootstrapServiceRegistryBuilder withStrategySelectors(StrategyRegistrationProvider strategyRegistrationProvider) {
+	public AbstractBootstrapServiceRegistryBuilder withStrategySelectors(StrategyRegistrationProvider strategyRegistrationProvider) {
 		for ( StrategyRegistration strategyRegistration : strategyRegistrationProvider.getStrategyRegistrations() ) {
 			this.strategySelectorBuilder.addExplicitStrategyRegistration( strategyRegistration );
 		}
@@ -196,13 +136,17 @@ public class BootstrapServiceRegistryBuilder {
 				classLoaders.addAll( providedClassLoaders );
 			}
 			
-			classLoaderService = new ClassLoaderServiceImpl( classLoaders );
+			classLoaderService = defaultClassLoaderService(classLoaders);
 		}
 		else {
 			classLoaderService = providedClassLoaderService;
 		}
 
 		return build(classLoaderService, strategySelectorBuilder.buildSelector( classLoaderService ));
+	}
+
+	protected ClassLoaderServiceImpl defaultClassLoaderService(final Set<ClassLoader> classLoaders) {
+		return new ClassLoaderServiceImpl( classLoaders );
 	}
 
 	protected BootstrapServiceRegistry build(ClassLoaderService classLoaderService, StrategySelector strategySelector) {

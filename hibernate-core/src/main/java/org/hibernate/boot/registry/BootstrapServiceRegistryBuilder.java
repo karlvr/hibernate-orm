@@ -24,12 +24,15 @@
 package org.hibernate.boot.registry;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 
+import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
 import org.hibernate.boot.registry.internal.BootstrapServiceRegistryImpl;
 import org.hibernate.boot.registry.selector.internal.StrategySelectorBuilder;
 import org.hibernate.integrator.internal.IntegratorServiceImpl;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.boot.registry.BootstrapServiceRegistry;
+import org.hibernate.service.boot.AbstractBootstrapServiceRegistryBuilder;
 import org.hibernate.service.boot.classloading.spi.ClassLoaderService;
 import org.hibernate.service.boot.selector.StrategyRegistrationProvider;
 import org.hibernate.service.boot.selector.spi.StrategySelector;
@@ -45,7 +48,7 @@ import org.hibernate.service.boot.selector.spi.StrategySelector;
  *
  * @see StandardServiceRegistryBuilder
  */
-public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.BootstrapServiceRegistryBuilder {
+public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.AbstractBootstrapServiceRegistryBuilder {
 	private final LinkedHashSet<Integrator> providedIntegrators = new LinkedHashSet<Integrator>();
 	
 	public BootstrapServiceRegistryBuilder() {
@@ -68,8 +71,6 @@ public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.
 	public BootstrapServiceRegistry build() {
 		return (BootstrapServiceRegistry) super.build();
 	}
-	
-	
 
 	@Override
 	public BootstrapServiceRegistryBuilder with(ClassLoader classLoader) {
@@ -90,6 +91,68 @@ public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.
 	public BootstrapServiceRegistryBuilder withStrategySelectors(StrategyRegistrationProvider strategyRegistrationProvider) {
 		return (BootstrapServiceRegistryBuilder) super.withStrategySelectors(strategyRegistrationProvider);
 	}
+	
+
+
+	/**
+	 * Applies the specified {@link ClassLoader} as the application class loader for the bootstrap registry.
+	 *
+	 * @param classLoader The class loader to use
+	 *
+	 * @return {@code this}, for method chaining
+	 *
+	 * @deprecated Use {@link #with(ClassLoader)} instead
+	 */
+	@Deprecated
+	@SuppressWarnings( {"UnusedDeclaration"})
+	public AbstractBootstrapServiceRegistryBuilder withApplicationClassLoader(ClassLoader classLoader) {
+		return with( classLoader );
+	}
+
+	/**
+	 * Applies the specified {@link ClassLoader} as the resource class loader for the bootstrap registry.
+	 *
+	 * @param classLoader The class loader to use
+	 *
+	 * @return {@code this}, for method chaining
+	 *
+	 * @deprecated Use {@link #with(ClassLoader)} instead
+	 */
+	@Deprecated
+	@SuppressWarnings( {"UnusedDeclaration"})
+	public AbstractBootstrapServiceRegistryBuilder withResourceClassLoader(ClassLoader classLoader) {
+		return with( classLoader );
+	}
+
+	/**
+	 * Applies the specified {@link ClassLoader} as the Hibernate class loader for the bootstrap registry.
+	 *
+	 * @param classLoader The class loader to use
+	 *
+	 * @return {@code this}, for method chaining
+	 *
+	 * @deprecated Use {@link #with(ClassLoader)} instead
+	 */
+	@Deprecated
+	@SuppressWarnings( {"UnusedDeclaration"})
+	public AbstractBootstrapServiceRegistryBuilder withHibernateClassLoader(ClassLoader classLoader) {
+		return with( classLoader );
+	}
+
+	/**
+	 * Applies the specified {@link ClassLoader} as the environment (or system) class loader for the bootstrap registry.
+	 *
+	 * @param classLoader The class loader to use
+	 *
+	 * @return {@code this}, for method chaining
+	 *
+	 * @deprecated Use {@link #with(ClassLoader)} instead
+	 */
+	@Deprecated
+	@SuppressWarnings( {"UnusedDeclaration"})
+	public AbstractBootstrapServiceRegistryBuilder withEnvironmentClassLoader(ClassLoader classLoader) {
+		return with( classLoader );
+	}
 
 	@Override
 	protected BootstrapServiceRegistry build(ClassLoaderService classLoaderService, StrategySelector strategySelector) {
@@ -104,4 +167,9 @@ public class BootstrapServiceRegistryBuilder extends org.hibernate.service.boot.
 				integratorService
 		);
 	}
+	
+	protected ClassLoaderServiceImpl defaultClassLoaderService(final Set<ClassLoader> classLoaders) {
+		return new ClassLoaderServiceImpl( classLoaders );
+	}
+	
 }

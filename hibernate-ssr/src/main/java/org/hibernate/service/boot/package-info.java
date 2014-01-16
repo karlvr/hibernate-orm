@@ -17,6 +17,4 @@
  * defaults in Java SE and EE environments, particularly in respect to Class loading.
  */
 package org.hibernate.service.boot;
-import org.hibernate.service.boot.BootstrapServiceRegistry;
-import org.hibernate.service.boot.BootstrapServiceRegistryBuilder;
 
